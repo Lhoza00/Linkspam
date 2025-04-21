@@ -1,0 +1,50 @@
+<?php
+class Database {
+    private $db_server = "localhost";
+    private $db_user = "root";
+    private $db_pass = "";
+    private $db_name = "linkspamdb";
+    private $conn;
+
+    function connect(){
+        try{
+            $connection = mysqli_connect($this->db_server, $this->db_user, $this->db_pass, $this->db_name);
+        }catch(mysqli_sql_exception){
+            header("Location: 404.php");
+            exit();
+        }
+        return $connection;
+    }
+    function read($query){
+        $conn = $this->connect();
+        $result = mysqli_query($conn, $query);
+        if(!$result){
+            
+            return false;
+        }else{
+            $data = false;
+            while($row = mysqli_fetch_assoc($result)){
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
+
+    function save($query){
+        $conn = $this->connect();
+        $result = mysqli_query($conn, $query);
+        if(!$result){
+            
+            return false;
+        }else{
+            return true;
+        }
+        mysqli_close($conn);
+    }
+
+
+
+}   
+$DB = new Database();
+
+?>
