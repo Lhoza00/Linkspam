@@ -7,11 +7,9 @@ class Database {
     private $conn;
 
     function connect(){
-        try{
-            $connection = mysqli_connect($this->db_server, $this->db_user, $this->db_pass, $this->db_name);
-        }catch(mysqli_sql_exception){
-            header("Location: 404.php");
-            exit();
+        $connection = mysqli_connect($this->db_server, $this->db_user, $this->db_pass, $this->db_name);
+        if (!$connection) {
+            die("Connection failed: " . mysqli_connect_error());
         }
         return $connection;
     }
@@ -19,13 +17,14 @@ class Database {
         $conn = $this->connect();
         $result = mysqli_query($conn, $query);
         if(!$result){
-            
             return false;
         }else{
-            $data = false;
+            $data = [];
             while($row = mysqli_fetch_assoc($result)){
                 $data[] = $row;
             }
+            mysqli_close($conn);
+
             return $data;
         }
     }
@@ -33,13 +32,14 @@ class Database {
     function save($query){
         $conn = $this->connect();
         $result = mysqli_query($conn, $query);
+        mysqli_close($conn);
         if(!$result){
             
             return false;
         }else{
             return true;
         }
-        mysqli_close($conn);
+        
     }
 
 

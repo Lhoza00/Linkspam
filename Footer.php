@@ -1,10 +1,10 @@
 <footer>
     <div class="container">
         <div class="topfooter">
-            <a href="Home.php" class="Logo">LinkSpam</a> 
+            <a href="Index.php" class="Logo">LinkSpam</a> 
             <div class="socials">
-                <i href="#" class="fab fa-facebook-f"></i>
-                <i class="fab fa-youtube"></i>
+                <a href="https://www.facebook.com/profile.php?id=61575205995995" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://youtube.com/@linkspam-only?si=bxhBXdcw7IjSKl-7" target="_blank"><i class="fab fa-youtube"></i></a>
                 <i class="fab fa-twitter"></i>
                 <i class="fab fa-instagram"></i>
             </div>
@@ -23,49 +23,3 @@
         </div>
     </div>
 </footer>
-
-<style>
-     footer{
-        min-height: 15vh;
-    }
-
-    footer .container hr{
-        border: 1px solid black;
-    
-    }
-
-    .topfooter{
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-    }
-
-    .socials{
-        font-size: 1.7rem;
-        padding-top: 7px;
-        
-    }
-
-    .socials i{
-        padding: 0 9px;
-    }
-
-    .footlinks{
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-    }
-
-    #T_C{
-        display: flex;
-        justify-content: space-between;
-        width: 19vw;
-        
-    }
-
-    #T_C a{
-        text-decoration: none;
-        color: black;
-    
-    }
-</style>

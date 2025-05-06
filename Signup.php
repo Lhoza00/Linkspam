@@ -1,11 +1,15 @@
 <?php 
-include('Database.php');
-include('SignupClass.php');   
-$error = ""; // Add this
+    include('Database.php');
+    include('SignupClass.php');   
+    $error = ""; // Add this
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $signup = new SignUp();
-    $error = $signup->evaluate($_POST); // store error
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $signup = new SignUp();
+        $error = $signup->evaluate($_POST); // store error
+        if(empty($error)){
+            header("Location: Login.php");
+            die;
+        }
 }
 ?>
 <html lang="en" id="SignUpPage"> 
@@ -68,13 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="flForm">
                                     <label>Card Number</label>
                                     <input type="text" name="paymentCardNumber" class="inp CardNumber" 
-                                            id="paymentCardNumber" maxlength="19" inputmode="numeric" 
+                                            id="paymentCardNumber" minlength="16" maxlength="19" inputmode="numeric" 
                                             placeholder="1234 5678 9012 3456" required 
-                                            oninput="formatCardNumber(this)">
+                                            oninput="formatCardNumber(this);">
                                 </div>
                                 <div class="miniForm">
                                 <div class="InputContainer">
-                                    <label for="paymentExp">Expiry Date (MM/YY)</label>
+                                    <label for="paymentExp">Expiry Date</label>
                                     <input type="text" id="paymentExp" name="paymentExp" maxlength="5" placeholder="MM/YY" required oninput="formatExpiryDate(this)">
                                 </div>
                                     <div class="InputContainer">
@@ -186,42 +190,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 </script>
+
 </html>
-<?php
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        
-       /* $signup = new SignUp();
-        $signup->evaluate($_POST);
-        $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_SPECIAL_CHARS);
-        $userFullName = filter_input(INPUT_POST, "fullName", FILTER_SANITIZE_SPECIAL_CHARS);
-        $userEmail = filter_input(INPUT_POST, "userEmail", FILTER_SANITIZE_EMAIL);
-        $userPhoneNumber = filter_input(INPUT_POST, "userPhoneNumber", FILTER_SANITIZE_NUMBER_INT);
-        $userPassword = filter_input(INPUT_POST, "userPassword", FILTER_SANITIZE_SPECIAL_CHARS);
-        $userPassword = password_hash($userPassword, PASSWORD_BCRYPT); 
-        $subType = filter_input(INPUT_POST, "subType", FILTER_SANITIZE_SPECIAL_CHARS);
-        $paymentCardNumber = filter_input(INPUT_POST, "paymentCardNumber", FILTER_SANITIZE_NUMBER_INT);
-        $paymentExp = filter_input(INPUT_POST, "paymentExp", FILTER_SANITIZE_NUMBER_INT);
-        $paymentCVV = filter_input(INPUT_POST, "paymentCVV", FILTER_SANITIZE_NUMBER_INT);
-            
 
-            
-        $sqlAccounts = "INSERT INTO useraccounts (userName, cardNumber, cardExp, cardCVV)
-                        VALUES ('$userName', '$paymentCardNumber', '$paymentExp', '$paymentCVV');";
-        $sqlUserDetails = "INSERT INTO userdetails (userName, fullName, userEmail, userPhoneNumber, 
-                            userPassword, subType)
-                            VALUES ('$userName', '$userFullName', '$userEmail', '$userPhoneNumber','$userPassword', '$subType');";
-            
-            
-
-            try{
-                mysqli_query($conn, $sqlAccounts);
-                mysqli_query($conn, $sqlUserDetails);
-            }
-            catch(mysqli_sql_exception){
-                echo "error";
-            }
-
-            mysqli_close($conn);
-            exit();*/  
-    }     
-?>

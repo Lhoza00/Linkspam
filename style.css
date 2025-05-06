@@ -5,7 +5,7 @@
     font-family: "Poppins", sans-serif;
 }
 
-input{ 
+input, textarea{ 
     padding: 0 0.5rem;
     outline: none;
 }
@@ -19,6 +19,7 @@ button, i:hover{
     --Main: #FF6E00;
     --Primary: #FFFFFF;
     --Secondary: #EAE6e0;
+    --Substitute: #FFA74F;
     --Tertiary: #FFFFFF;
 }
 
@@ -26,11 +27,11 @@ button, i:hover{
 header, footer, .SectionSetting{
     background-color: var(--Main);
 }
-.hero , .benefits_section, .BenefitContainer, .section_contact, .SignBG,
+.hero , .benefits_section, .BenefitContainer, .section_contact, .News, .SignBG,
 .SectionBio, .sectonWhoWeAre, .sectionMission, .sectionHowWeOperate {
     background-color: var(--Primary);
 }
-.section_services, #secondBenefitContainer , .News,
+.section_services, #secondBenefitContainer , 
  .Centrehub, .sectionAboutContact  {
     background-color: var(--Secondary);
 }
@@ -99,14 +100,40 @@ header .container{
 .navbar a:hover:before {
     width: 100%
 }
+.mini-navbar{
+    display: none;
+    list-style: none;
+    background-color: var(--Substitute);
+    margin: 0 1.5rem;
+    z-index: 9995;
+    right: 0%;
+    top: 75%;
+    border-radius: 4px;
+    position: absolute;
+    text-align: right;
+}
+.mini-navbar li{
+    display: block;
+    border-bottom: 1px solid black;
+    padding: 0.3rem 25px;
+}
+.mini-navbar li:first-child{
+    border-top: 1px solid black;
 
+}
+.mini-navbar li a{
+    text-decoration: none;
+    color: black;
+    
+    font-size: 1.5rem;
+}
 .container{
     max-width: 1536px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    border: 0px solid tomato;
+    border: 0px solid black;
 } 
 
 
@@ -125,11 +152,12 @@ header .container{
 }
 
 .hero_image{
-    width: 43vw;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+    width: 60vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
     position: relative;
-    height: 50vh;
+    height: 60vh;
+    
 }
 
 .hero_header{
@@ -298,7 +326,51 @@ header .container{
     
 }
 /*Footer Page*/
+footer{
+    min-height: 15vh;
+}
 
+footer .container hr{
+    border: 1px solid black;
+
+}
+
+.topfooter{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.socials{
+    font-size: 1.7rem;
+    padding-top: 7px;
+    
+}
+
+.socials i{
+    padding: 0 9px;
+}
+.socials a{
+    color: black;
+    text-decoration: none;
+}
+
+.footlinks{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+#T_C{
+    display: flex;
+    justify-content: space-between;
+    width: 19vw;
+}
+
+#T_C a{
+    text-decoration: none;
+    color: black;
+}
 
 /*ContactPage*/
 
@@ -353,6 +425,8 @@ header .container{
 
 .contactermessage::placeholder{
     text-align: left;
+    align-self: center;
+    line-height: 8;
     padding-left: 20px;
 }
 
@@ -420,15 +494,18 @@ header .container{
     width: 45%;
     height: auto;
     min-height: 100vh;
+    padding: 1rem;
 }
 .MemOptionContainer{
     width: 45%;
+    padding: 1rem;
+    min-height: 100vh;
 }
 .OfferPrice{
-    margin: 4Vh 0;
+    place-self: center;
     padding: 0.5rem 0;
     border-radius: 9px;
-    height: auto;
+    height: 70%;
 }
 
 .OfferPrice hr{
@@ -521,12 +598,9 @@ header .container{
 .SignSection .container .card{
     width: 90%;
     height: 100%;
-    max-height: 90vh;
-    margin: 4vh auto;
-    margin-right: 3em;
-    justify-content: center;
+    place-self: center;
+    margin: 0 auto;
     border-radius: 9px;
-    margin-bottom: 1rem;
 }
 
 .SigninHeader{
@@ -589,6 +663,10 @@ input[type="number"]::-webkit-inner-spin-button{
 .divButton{
     display: flex;
 }
+.SocialsLoginOption{
+    width: 100%;
+    
+}
 .btnLoginOption, .btnLoginOption p:hover{
     cursor: pointer;
 }
@@ -597,7 +675,7 @@ input[type="number"]::-webkit-inner-spin-button{
     align-items: center;
     padding: 0 0.5rem;
     justify-content: space-evenly;
-    width: 10rem;
+    width: 100%;
     height: 3rem;
     border: 1px solid black;
     background-color: #ffff;
@@ -607,10 +685,12 @@ input[type="number"]::-webkit-inner-spin-button{
 .btnLoginOption .fa-facebook-f{
     color: blue;
     font-size: 1.5rem;
+    margin: 0 1rem;
 }
 .btnLoginOption .fa-google{
     color: red;
     font-size: 1.5rem;
+    margin: 0 1rem;
 }
 .fa-angle-down{
     flex: right;
@@ -620,10 +700,9 @@ input[type="number"]::-webkit-inner-spin-button{
     visibility: hidden;
 }
 .SignButton{
-    margin: 0 auto;
+    margin: 0.8rem auto;
     width: 40%;
     height: 7vh;
-    margin-top: 1rem;
     border-radius: 7px;
     border-width: 1px;
 }
@@ -633,11 +712,10 @@ input[type="number"]::-webkit-inner-spin-button{
 .SocialsLoginOption{
     display: flex;
     justify-content: space-evenly;
-    margin: 1.5rem 0;
    
 }
 .AlreadyLogged{
-    margin-top: 0.5rem;
+    margin: 1rem 0;
     width: 100%;
 }
 .AlreadyLogged a{
@@ -654,8 +732,8 @@ input[type="number"]::-webkit-inner-spin-button{
 .PaymentCard{
     border-radius: 9px;
     width: 90%;
-    margin-bottom: 1rem;
-    
+    margin: 1rem 0;
+    place-self: center;
 }
 .paymentcard .form .inp{
     width: 100%;
@@ -822,7 +900,7 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 .MissionContainer{
     border: 0px solid purple;
-    width: 40%;
+    width: 46%;
 }
 .cardMission{
     border: 0px solid #56453E;
@@ -837,13 +915,14 @@ input[type="number"]::-webkit-inner-spin-button{
 .MissionImage{
     padding: 0.5rem 0;
     border: 0px solid black;
-    width: 55%;
-    height: 100%;
+    width: 53%;
+    height: 50vh;
 }
 .MissionImage img{
     position: relative;
     border-radius: 0.7rem;
     width: 100%;
+    height: 100%;
 }
 .cardMission p{
     
@@ -929,12 +1008,10 @@ input[type="number"]::-webkit-inner-spin-button{
 .BioContainer{
     width: 40%;
     height: 100%;
-    border: 0px solid purple;
 }
 .ProgressContainer{
     width: 55%;
     height: 100%;
-    border: 0px solid green;
 }
 .atUsername{
     font-size: 1.7rem;
@@ -996,7 +1073,6 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 .BioStatement{
     margin: 1rem auto;
-    text-align: center;
     word-wrap: wrap;
     padding: 0 0.5rem;
 }
@@ -1034,6 +1110,15 @@ input[type="number"]::-webkit-inner-spin-button{
     justify-content: center;
     height: 50%;
     width: 60%;
+}
+.loadbutton{
+    font-size: 1.1rem;
+    border: 0px solid black;
+    outline: none;
+}
+.loadbutton:hover{
+    background-color: white;
+    font-size: 1.2rem;
 }
 .ProgressContainer hr{
     color: black;
@@ -1080,6 +1165,7 @@ input[type="number"]::-webkit-inner-spin-button{
     height: auto;
     flex-wrap: wrap;
 }
+
 .ProgressMiniCard{
     Background-color: lime;
     width: 45%;
@@ -1117,8 +1203,279 @@ input[type="number"]::-webkit-inner-spin-button{
     text-align: center;
     margin: 0.3rem auto;
 }
+.btnTrack a{
+    text-decoration: none;
+}
 
 
+/*Edit Container Page*/
+.SectionEditProfile .container{
+    place-items: center;
+    align-self: center;
+    margin: auto;
+    
+}
+.EditContainer{
+    width: 50%;
+    height: auto;
+    padding: 1rem;
+    margin: 1.5rem;
+    background-color: var(--Main);
+    border-radius: 9px;
+    align-self: center;
+}
+.EditContainer .pfCoverBox{
+    position: relative;
+    height: 10rem;
+    width: 100%;
+    border: 2px solid green;
+}
+.EditContainer .pfCoverBox:hover{
+    cursor: pointer;
+}
+.EditContainer .pfCoverBox img{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    display: flex;
+    margin: 0 auto;
+}
+.EditContainer .pfpBox{
+    height: 30%;
+    width: 40%;
+    margin: 0.5rem auto;
+}
+.hredit{
+    margin: 0.5rem 0;
+    width: 100%;
+}
+.EditContainer .pfpBox img{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    place-items: center;
+    display: flex;
+    margin: 0 auto;
+}
+.editInput{
+    width: 100%;
+    border-radius: 9px;
+    outline: 0;
+    border: 0px solid black;
+    background-color: var(--Main);
+}
+.editBio{
+    min-height: 7rem;
+    height: auto;
+    font-size: 1.1rem;
+    background-color: var(--Substitute);
+}
+.editBio::-webkit-scrollbar{
+    width: 10px;
+    background: var(--Secondary)
+}
+.editUsername{
+    font-size: 1.5rem;
+    font-weight: 600;
+
+}
+.editInfo{
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+.AboutUserContainer{
+    width: 100%;
+}
+.opt{
+    background-color: #FFA74F;
+    outline: none;
+    font-size: 1.2rem;
+    border-radius: 9px;
+}
+.optInput{
+    background-color: #FFA74F;
+    outline: none;
+    border: 0px solid black;
+    font-size: 1.2rem;
+    width: 30%;
+    border-radius: 5px;
+}
+.optInput::placeholder{
+    color: black;
+}
+
+/*Home Page*/
+.Section-userHome{
+    min-height: 80vh;
+    height: auto;
+}
+.btnPost{
+    background-color: var(--Primary);
+    border-radius: 9px;
+    border: 1px solid black;
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+    height: 60%;
+    width: 6rem;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.btnPost p, .btnPost i{
+    font-size: 1.4rem;
+}
+.hmSearch{
+    border-radius: 9px;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 60%;
+    outline: none;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+.fa-circle-user{
+    font-size: 2.6rem;
+    padding: 0.7rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+    display: flex;
+    cursor: pointer;
+}
+.home-sidebar{
+    display: none;
+    list-style: none;
+    background-color: var(--Substitute);
+    margin: 0 1rem;
+    z-index: 9995;
+    left: 7.5rem;
+    top: 4rem;
+    border-radius: 4px;
+    position: absolute;
+    text-align: left;
+}
+.home-sidebar li{
+    display: block;
+    border-bottom: 1px solid black;
+    padding: 0.3rem 25px;
+}
+.home-sidebar li:first-child{
+    border-top: 1px solid black;
+
+}
+.home-sidebar li a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+}
+.SectionPost {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.SectionPost.active {
+    max-height: 500px; /* or set to something large enough */
+    opacity: 1;
+}
+.SectionPost .container{
+    position: relative;
+}
+.SectionPost .container textarea {
+    display: block;
+    width: 100% !important;
+    resize: vertical;
+    font-size: 1.2rem;
+  }
+
+  
+.SectionPost .container .inner-post {
+    padding: 0.2rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    border: 0px solid sienna;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+}
+.SectionPost .container .inner-post i{
+    font-size: 1.6rem;
+}
+.inner-post .btnSavePost{
+    font-size: 1rem;
+    width: 20%;
+    height: 100%;
+    border-radius: 0.7rem;
+}
+.video-post{
+    border: 2px solid green;
+    display: flex;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.video-post .display-container{
+    width: 40%;
+    height: 60vh;
+}
+.video-post .display-container .displayer{
+    background-color: aquamarine;
+    border: 2px solid navy;
+    height: 100%;
+    width: 100%;
+}
+.video-post div{
+    border: 1px solid black;
+}
+.video-post .post-container{
+    width: 60%;
+}
+.video-post .post-container div{
+    padding: 0.5rem;
+}
+.video-post .post-container .caption-wrap{
+    height: 15%;
+}
+.video-post .post-container .comment-container{
+    height: 75%;
+}
+.video-post .post-container .likes-container{
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+}
+.likes-wrapper{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.likes-wrapper span {
+    display: inline-flex;
+
+}
+.likes-wrapper span i{
+    padding: 0 0.5rem;
+    height: 100%;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+}
+.likes-wrapper span p{
+    font-size: 1.1rem;
+    height: 100%;
+    align-items: center;
+    display: flex;
+}
+.caption-wrap{
+    border: 2px solid hotpink;
+}
 /*Media Queries*/
 
 @media (max-width: 1536px) {
@@ -1143,15 +1500,16 @@ input[type="number"]::-webkit-inner-spin-button{
     .progressday .streakday{
         width: 20%;
     }
-    .DetailsDivContainer .card .form{
-        height: 130vh;
-        max-height: 160vh;
-    }
-    .OfferPrice{
-        height: 95%;
-    }
+    
     .MemOptionContainer, .DetailsDivContainer{
-        height:140vh;
+        min-height:130vh;
+        height: auto;
+    }
+    .SocialsLoginOption{
+        justify-content: space-between;
+    }
+    .SignSection .container .card{
+        height: 90%;
     }
 }
 
@@ -1205,41 +1563,24 @@ input[type="number"]::-webkit-inner-spin-button{
     }
 
     /*SignUp Page*/
-    .SignSection .container{
-        display: contentl
-    }
     .DetailsDivContainer, .MemOptionContainer{
-        height: auto;
-    }
+        min-height: 130vh;
+        width: 50%;
+
+    }   
     .LoginSection .container .card{
         width: 55%;
     }
-    .SignSection .container .card{
-        width: 100%;
-        max-height: 100vh;
-        margin-right: 0;
-        margin-left: auto;
-        margin-bottom: 1rem;
-    }
-    .SignSection .container .OfferPrice{
-        display: content;
-        width: 100%;
-        height: auto;
-        
-    }
-    .OfferPrice{
-        margin-left: 0em;
-    }
+
     /*.SignSection .container{
         flex-direction: row-reverse;
     }*/
     .memData{
         display: content;
     }
-    .btnLoginOption{
-        width: 45%;
+    .btnLoginOption .fab{
+        margin: 0 0.5rem;
     }
-    
 
     /**/
 
@@ -1264,8 +1605,8 @@ input[type="number"]::-webkit-inner-spin-button{
         width: 30%;
     }
     
-    .BioCard, .AboutUserContainer, .CourseCard{
-        width: 70%;
+    .Profile_Wrap .container{
+        height: 140vh;
     }
     .cardWhoWeAre{
         width: 80%;
@@ -1342,7 +1683,7 @@ input[type="number"]::-webkit-inner-spin-button{
         width: 20vw;
         height: 35vh;
     }
-    .backgroundcard{
+    .backgroundcard, .EditContainer{
         width: 75%;
     }
     .cardContact{
@@ -1369,25 +1710,31 @@ input[type="number"]::-webkit-inner-spin-button{
         display: contents;
     }
     /*SignUp Page*/
-    .MemOptionContainer{
-        width: 50%;
+    .DetailsDivContainer, .MemOptionContainer{
+        padding: 0.5rem 0;
+    }
+    .SignSection .container .card{
+        width: 95%;
+    }
+    .SignButton{
+        width: 100%;
     }
     .SocialsLoginOption{
-        justify-content: space-between;
-        margin-top: 0.5rem;
+        display: inherit;
+        margin: 0;
+    }
+    .btnLoginOption{
+        margin: 0.3rem 0;
     }
     .itemPrice{
         width: 90%;
     }
-    .AlreadyLogged{
-        width: 80%;
-        margin: 0 auto;
+    .hmSearch{
+        width: 50%;
     }
-    .OfferPrice{
-        width: 45%;
+    .home-sidebar{
+        left: 3rem
     }
-   
-
 }
 
 @media (max-width: 648px) {
@@ -1415,13 +1762,12 @@ input[type="number"]::-webkit-inner-spin-button{
         width: 100%;
         background-color: white;
     }
-    
-    .cardContact{
+    .cardContact, .EditContainer{
         width: 92%;
      }
     .LoginSection .container .card{
         width: 80%;
-        max-height: auto;
+        
     }
     .ProgressMiniCard p:first-child{
         font-size: 1rem;
@@ -1444,26 +1790,27 @@ input[type="number"]::-webkit-inner-spin-button{
     }
     /*SignUp Page*/
     .SignSection .container{
-        flex-direction: none;
-        display: block;
+        display: inherit;
     }
     .DetailsDivContainer, .MemOptionContainer{
         margin: 0 auto;
         width: 100%;
     }
-    
+    .SignSection .container .card{
+        height: 100%;
+        min-height: 115vh;
+    }
     .SignSection .container .card, .SignSection .container .OfferPrice, .PaymentCard{
         width: 80%;
-        margin: 2rem;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 1rem 0;
     }
     .fa-angle-down{
         visibility: visible;
         margin: auto 1rem;
     }
-    .PaymentCard{
-        margin-bottom: 0;
+    .SocialsLoginOption{
+        display: flex;
+        justify-content: space-evenly;
     }
     /*About Page*/
     .cardWhoWeAre{
@@ -1509,7 +1856,7 @@ input[type="number"]::-webkit-inner-spin-button{
         margin: 0 auto;
         width: 100%;
     }
-   
+    
     
 
 }
@@ -1642,11 +1989,22 @@ input[type="number"]::-webkit-inner-spin-button{
         padding: 0 4.25rem;
 
     }
-    
+    /*Profile*/
+    .zin{
+        display: inherit;
+    }
+    .opt, .optInput{
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    #circle-user .home-sidebar{
+        left: 0;
+        margin: 0;
+    }
 }
 
 @media (max-width: 340px) {
-    .container{
+    .container, .EditContainer{
         width:100%;
     }
     #UMB{

@@ -33,35 +33,13 @@
                         </div>
                     </div>
                     <div class="MissionImage">
-                        <img src="Advertise.PNG" alt="Mission Image">
+                        <img src="Images/1f62fddaafb2026669e09f680c977c08.jpg" alt="Mission Image">
                     </div>
                 </div>
                 <!--Add photograph about a user mission and a business mission(try using humans as it)-->
             </div>
         </section>
-        <section class="section_services">
-            <div class="container">
-                <h1 id="OurServices">Our Services</h1>
-                <div class="servicesContainer">
-                    <div class="DivServices">
-                        <h3 class="serviceSubTitle">Influence marketing</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid minima aperiam eaque earum provident voluptas minus assumenda! Distinctio quibusdam debitis tempora, quidem neque nobis adipisci laboriosam quaerat temporibus, enim delectus!</p>
-                    </div>
-                    <div class="DivServices">
-                        <h3 class="serviceSubTitle">Network Center Hub</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid minima aperiam eaque earum provident voluptas minus assumenda! Distinctio quibusdam debitis tempora, quidem neque nobis adipisci laboriosam quaerat temporibus, enim delectus!</p>
-                    </div>
-                    <div class="DivServices">
-                        <h3 class="serviceSubTitle">Performance Analytics</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid minima aperiam eaque earum provident voluptas minus assumenda! Distinctio quibusdam debitis tempora, quidem neque nobis adipisci laboriosam quaerat temporibus, enim delectus!</p>
-                    </div>
-                    <div class="DivServices">
-                        <h3 class="serviceSubTitle">Level-up per click</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid minima aperiam eaque earum provident voluptas minus assumenda! Distinctio quibusdam debitis tempora, quidem neque nobis adipisci laboriosam quaerat temporibus, enim delectus!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <?php include('OurServices.php');?>
         <section class="sectionHowWeOperate">
             <div class="container">
                 <h2 class="aboutHeader">How we operate</h2>

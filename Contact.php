@@ -20,7 +20,7 @@
                     <p class="wording">Please fill out the form below to contact us.</p>
                     <input type="email" placeholder="Enter your e-mail" class="contacter">
                     <input placeholder="Enter subject" class="contacter">
-                    <input placeholder="Enter your message" class="contactermessage">
+                    <textarea placeholder="Enter your message" class="contactermessage"></textarea>
                     <button class="btn Contactbtn">Send</button>
                 </div>
                     <hr size="3" color="black"/>

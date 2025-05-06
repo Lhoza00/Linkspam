@@ -14,7 +14,13 @@ class Signup {
             }
         }
         if ($this->error === "") {
-            if($this->checkUniqueness($data)){$this->create_user($data);}
+            $this->checkUniqueness($data);
+            if($this->error === ""){
+                $this->create_user($data);
+            }else{
+                return $this->error;
+            }
+            
         }else{
             $this->error .= "Username, email, or phone number already exists.<br/>";
         }
@@ -23,86 +29,49 @@ class Signup {
 
     private function checkUniqueness($data) {
         $DB = new Database();
-        $userName = $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_SPECIAL_CHARS);
+        $userName = $data["userName"];
         if (!empty($data['userName'])) {
-            $usernameCheck = $DB->read("SELECT username FROM userdetails WHERE userName = $userName");
-            if ($usernameCheck) {
+            $usernameCheck = $DB->read("SELECT username FROM userdetails WHERE userName = '$userName'");
+            if (!empty($usernameCheck)) {
                 $this->error .= "Username already taken.<br/>";
-            }
-        }
-    
-        if (!empty($data['userEmail'])) {
-            $emailCheck = $DB->read("SELECT userEmail FROM userdetails WHERE userEmail = ?", [$data['userEmail']]);
-            if($emailCheck) {
-                $this->error .= "Email already registered.<br/>";
-            }
-        }
-    
-        if (!empty($data['userPhoneNumber'])) {
-            $phoneCheck = $DB->read("SELECT 1 FROM userdetails WHERE userPhoneNumber = ?", [$data['userPhoneNumber']], 's');
-            if ($phoneCheck) {
-                $this->error .= "Phone number already in use.<br/>";
+                return $this->error;
             }
         }
 
-        if($this->error == ""){
-            return true;
-        }else{
-            return false;
+        $userEmail = $data["userEmail"];
+        if (!empty($data['userEmail'])) {
+            $emailCheck = $DB->read("SELECT userEmail FROM userdetails WHERE userEmail = '$userEmail'");
+            if(!empty($emailCheck)) {
+                $this->error .= "Email already registered.<br/>";
+                return $this->error;
+            }
+
         }
+
+        $userPhoneNumber = $data["userPhoneNumber"];
+        if (!empty($data['userPhoneNumber'])) {
+            $phoneCheck = $DB->read("SELECT userPhoneNumber FROM userdetails WHERE userPhoneNumber = '$userPhoneNumber'");
+            if (!empty($phoneCheck)) {
+                $this->error .= "Phone number already in use.<br/>";
+                return $this->error;
+            }
+        }
+
+        $length = strlen(preg_replace('/\D/', '', $data["paymentCardNumber"])); // Remove non-digits
+        if($length < 16 || $length > 19){
+            $this->error = "Payment Card Number must be 16 digits <br/>";
+            return $this->error;
+        }
+
+        
+
+    }
+
+    private function createUserID(){
+        return 'user_' . bin2hex(random_bytes(8));
     }
 
     public function create_user($data) {
-        $DB = new Database();
-        $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_SPECIAL_CHARS);
-        $userFullName = filter_input(INPUT_POST, "fullName", FILTER_SANITIZE_SPECIAL_CHARS);
-        $userEmail = $data["userEmail"];
-        /*$userEmail = filter_input(INPUT_POST, "userEmail", FILTER_SANITIZE_EMAIL);*/
-        $userPhoneNumber = filter_input(INPUT_POST, "userPhoneNumber", FILTER_SANITIZE_NUMBER_INT);
-        $userPassword = filter_input(INPUT_POST, "userPassword", FILTER_SANITIZE_SPECIAL_CHARS);
-        $userPasswordHash = password_hash($userPassword, PASSWORD_DEFAULT);
-        $subType = filter_input(INPUT_POST, "subType", FILTER_SANITIZE_SPECIAL_CHARS);
-
-        $paymentCardNumber = filter_input(INPUT_POST, "paymentCardNumber", FILTER_SANITIZE_NUMBER_INT);
-        $paymentExp = filter_input(INPUT_POST, "paymentExp", FILTER_SANITIZE_NUMBER_INT);
-        $paymentCVV = filter_input(INPUT_POST, "paymentCVV", FILTER_SANITIZE_NUMBER_INT);
-
-        $sqlUserDetails = "INSERT INTO userdetails (userName, fullName, userEmail, userPhoneNumber, 
-                        userPassword, subType)
-                        VALUES ('$userName', '$userFullName', '$userEmail', '$userPhoneNumber','$userPasswordHash', '$subType');";
-        
-        
-        $sqlAccounts = "INSERT INTO useraccounts (userName, cardNumber, cardExp, cardCVV)
-                    VALUES ('$userName', '$paymentCardNumber', '$paymentExp', '$paymentCVV');";
-        
-        try{
-            $DB->save($sqlUserDetails);
-            $DB->save($sqlAccounts);
-        }catch(mysqli_sql_exception){
-            header("Location: Database.php");
-            exit();
-        }
-    }
-}
-
-/*class Signup{
-    private $error = "";
-    public function evaluate($data){
-        foreach($data as $key => $value){
-            if(empty($value)){
-                $this->error =  $this->error . $key . " is empty!<br/>";
-            }else if($this->error == "btnSignIn is empty!"){
-                $data[$key] = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            }
-        }
-        if($this->error == "" || $this->error == "btnSignIn is empty!"){
-            //save
-            $this->create_user($data);
-        }else{
-            return $this->error;
-        }
-    }
-    public function create_user($data){
         $DB = new Database();
         $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_SPECIAL_CHARS);
         $userFullName = filter_input(INPUT_POST, "fullName", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -111,23 +80,34 @@ class Signup {
         $userPassword = filter_input(INPUT_POST, "userPassword", FILTER_SANITIZE_SPECIAL_CHARS);
         $userPasswordHash = password_hash($userPassword, PASSWORD_DEFAULT);
         $subType = filter_input(INPUT_POST, "subType", FILTER_SANITIZE_SPECIAL_CHARS);
-        $sqlUserDetails = "INSERT INTO userdetails (userName, fullName, userEmail, userPhoneNumber, 
-                        userPassword, subType)
-                        VALUES ('$userName', '$userFullName', '$userEmail', '$userPhoneNumber','$userPasswordHash', '$subType');";
         
+        $userId = $this->createUserID();
+
         $paymentCardNumber = filter_input(INPUT_POST, "paymentCardNumber", FILTER_SANITIZE_NUMBER_INT);
         $paymentExp = filter_input(INPUT_POST, "paymentExp", FILTER_SANITIZE_NUMBER_INT);
         $paymentCVV = filter_input(INPUT_POST, "paymentCVV", FILTER_SANITIZE_NUMBER_INT);
-        $sqlAccounts = "INSERT INTO useraccounts (userName, cardNumber, cardExp, cardCVV)
-                    VALUES ('$userName', '$paymentCardNumber', '$paymentExp', '$paymentCVV');";
+
+        $sqlUserDetails = "INSERT INTO userdetails (userid, userName, fullName, userEmail, userPhoneNumber, 
+                        userPassword, subType)
+                        VALUES ('$userId', '$userName', '$userFullName', '$userEmail', '$userPhoneNumber','$userPasswordHash', '$subType');";
+        
+        
+        $sqlAccounts = "INSERT INTO useraccounts (userid, userName, cardNumber, cardExp, cardCVV)
+                    VALUES ('$userId', '$userName', '$paymentCardNumber', '$paymentExp', '$paymentCVV');";
+        
+        $sqlStats = "INSERT INTO userStats(userid, userName, userEmail)
+                    VALUES ('$userId', '$userName','$userEmail');";
         
         try{
             $DB->save($sqlUserDetails);
             $DB->save($sqlAccounts);
+            $DB->save($sqlStats);
         }catch(mysqli_sql_exception){
             header("Location: Database.php");
             exit();
         }
     }
-}*/
+
+}
+
 ?>
