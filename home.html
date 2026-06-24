@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en" id="home">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSpam | Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main: #ff6600;
+            --main-light: #ff8533;
+            --main-dim: rgba(255,102,0,0.12);
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --surface2: #1f1f1f;
+            --surface3: #282828;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,102,0,0.4);
+            --text: #f0f0f0;
+            --text-muted: #888;
+            --text-dim: #555;
+            --sidebar-w: 64px;
+            --sidebar-w-open: 220px;
+            --header-h: 60px;
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: rgba(13,13,13,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem 0 calc(var(--sidebar-w) + 1.5rem);
+            z-index: 100;
+            transition: padding-left 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--main); }
+
+        .header-center {
+            flex: 1;
+            max-width: 420px;
+            margin: 0 2rem;
+        }
+        .search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-wrap i {
+            position: absolute;
+            left: 14px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+        .search-wrap input {
+            width: 100%;
+            height: 38px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 0 1rem 0 2.4rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .search-wrap input::placeholder { color: var(--text-dim); }
+        .search-wrap input:focus {
+            border-color: var(--main);
+            background: var(--surface3);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .btn-post-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            padding: 0.45rem 1.1rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-post-header:hover {
+            background: var(--main-light);
+            transform: translateY(-1px);
+        }
+        .avatar-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--surface3);
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            overflow: hidden;
+        }
+        .avatar-btn:hover { border-color: var(--main); }
+        .avatar-btn i { color: var(--text-muted); font-size: 1rem; }
+
+        /* ── SIDEBAR ── */
+        aside#sidebar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 100dvh;
+            width: var(--sidebar-w);
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding-top: var(--header-h);
+            z-index: 99;
+            transition: width 0.3s cubic-bezier(.4,0,.2,1);
+            overflow: hidden;
+        }
+        aside#sidebar.open { width: var(--sidebar-w-open); }
+
+        .sidebar-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0.75rem 0;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 0.75rem 1.1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            white-space: nowrap;
+            border-radius: 0;
+            transition: color 0.2s, background 0.2s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+        }
+        .nav-item i {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+        .nav-item span {
+            opacity: 0;
+            transition: opacity 0.2s 0.05s;
+            pointer-events: none;
+        }
+        aside#sidebar.open .nav-item span { opacity: 1; }
+        .nav-item:hover, .nav-item.active {
+            color: var(--text);
+            background: var(--main-dim);
+        }
+        .nav-item:hover i, .nav-item.active i { color: var(--main); }
+        .nav-item.active { border-left: 3px solid var(--main); }
+
+        .sidebar-spacer { flex: 1; }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            background: var(--surface3);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0.75rem auto;
+            color: var(--text-muted);
+            transition: color 0.2s, border-color 0.2s, transform 0.3s;
+            flex-shrink: 0;
+        }
+        .sidebar-toggle:hover { color: var(--main); border-color: var(--main); }
+        aside#sidebar.open .sidebar-toggle { transform: rotate(180deg); }
+
+        /* ── MAIN LAYOUT ── */
+        main {
+            margin-top: var(--header-h);
+            margin-left: var(--sidebar-w);
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - var(--header-h));
+            display: flex;
+            gap: 0;
+            justify-content: center;
+        }
+
+        .feed-column {
+            flex: 1;
+            max-width: 620px;
+            padding: 1.5rem 1rem;
+        }
+
+        .right-column {
+            width: 300px;
+            padding: 1.5rem 1rem 1.5rem 0;
+            flex-shrink: 0;
+        }
+
+        /* ── POST COMPOSER ── */
+        .post-composer {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        .post-composer.active { display: block; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .composer-top {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        .composer-avatar {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: var(--surface3);
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .composer-avatar i { color: var(--text-muted); }
+        .composer-textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            resize: none;
+            min-height: 72px;
+            line-height: 1.6;
+        }
+        .composer-textarea::placeholder { color: var(--text-dim); }
+
+        .composer-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+            margin-top: 0.75rem;
+        }
+        .composer-tools {
+            display: flex;
+            gap: 0.25rem;
+        }
+        .tool-btn {
+            width: 34px; height: 34px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            transition: color 0.2s, background 0.2s;
+        }
+        .tool-btn:hover { color: var(--main); background: var(--main-dim); }
+        .tool-btn label { cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+        .tool-btn input[type=file] { display: none; }
+
+        .char-count {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .btn-submit-post {
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            padding: 0.45rem 1.25rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-submit-post:hover {
+            background: var(--main-light);
+            transform: translateY(-1px);
+        }
+
+        /* ── FEED TABS ── */
+        .feed-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+        .feed-tab {
+            padding: 0.6rem 1.25rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .feed-tab:hover { color: var(--text); }
+        .feed-tab.active {
+            color: var(--main);
+            border-bottom-color: var(--main);
+        }
+
+        /* ── POST CARD ── */
+        .post-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+            animation: fadeUp 0.4s ease both;
+        }
+        .post-card:hover { border-color: var(--border-hover); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .post-card:nth-child(1) { animation-delay: 0.05s; }
+        .post-card:nth-child(2) { animation-delay: 0.1s; }
+        .post-card:nth-child(3) { animation-delay: 0.15s; }
+        .post-card:nth-child(4) { animation-delay: 0.2s; }
+        .post-card:nth-child(5) { animation-delay: 0.25s; }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1rem 0.6rem;
+        }
+        .post-user {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+        .post-avatar {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: var(--surface3);
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .post-avatar i { color: var(--text-muted); font-size: 1.1rem; }
+        .post-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .post-user-info { display: flex; flex-direction: column; }
+        .post-username {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .post-username:hover { color: var(--main); }
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.77rem;
+            color: var(--text-dim);
+        }
+        .post-tag {
+            background: var(--main-dim);
+            color: var(--main);
+            border-radius: 99px;
+            padding: 0.1rem 0.5rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .post-options {
+            color: var(--text-dim);
+            cursor: pointer;
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: var(--radius-sm);
+            transition: color 0.2s, background 0.2s;
+        }
+        .post-options:hover { color: var(--text); background: var(--surface3); }
+
+        .post-body {
+            padding: 0 1rem 0.75rem;
+            font-size: 0.97rem;
+            line-height: 1.65;
+            color: #d0d0d0;
+        }
+        .post-body .mention { color: var(--main); font-weight: 500; }
+        .post-body .hashtag { color: #5b9ef4; }
+
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+            background: var(--surface3);
+        }
+
+        .post-actions {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding: 0.5rem 0.75rem;
+            gap: 0.25rem;
+        }
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+        }
+        .action-btn:hover { color: var(--text); background: var(--surface3); }
+        .action-btn.liked { color: var(--main); }
+        .action-btn.liked i { color: var(--main); }
+        .action-btn i { font-size: 0.95rem; transition: transform 0.15s; }
+        .action-btn:hover i { transform: scale(1.15); }
+        .action-spacer { flex: 1; }
+
+        /* ── COMMENT INPUT ── */
+        .comment-section {
+            padding: 0.6rem 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+        .comment-input {
+            flex: 1;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 0.4rem 1rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .comment-input::placeholder { color: var(--text-dim); }
+        .comment-input:focus { border-color: var(--main); }
+        .comment-submit {
+            width: 32px; height: 32px;
+            background: var(--main);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            transition: background 0.2s, transform 0.15s;
+            flex-shrink: 0;
+        }
+        .comment-submit:hover { background: var(--main-light); transform: scale(1.08); }
+
+        /* ── RIGHT COLUMN WIDGETS ── */
+        .widget {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .widget-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Trending */
+        .trend-item {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: padding-left 0.2s;
+        }
+        .trend-item:last-child { border-bottom: none; }
+        .trend-item:hover { padding-left: 0.3rem; }
+        .trend-tag {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .trend-count {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 0.15rem;
+        }
+
+        /* Suggested users */
+        .suggested-user {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.45rem 0;
+        }
+        .sug-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--surface3);
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .sug-avatar i { color: var(--text-muted); font-size: 0.95rem; }
+        .sug-info { flex: 1; min-width: 0; }
+        .sug-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sug-handle { font-size: 0.77rem; color: var(--text-dim); }
+        .btn-follow {
+            background: transparent;
+            border: 1px solid var(--main);
+            color: var(--main);
+            border-radius: 99px;
+            padding: 0.25rem 0.75rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-follow:hover, .btn-follow.following {
+            background: var(--main);
+            color: #fff;
+        }
+
+        /* Streak widget */
+        .streak-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .streak-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--main);
+            line-height: 1;
+        }
+        .streak-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem; }
+        .streak-flame { font-size: 2.5rem; }
+
+        /* ── EMPTY STATE ── */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-dim);
+        }
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            display: block;
+            color: var(--surface3);
+        }
+        .empty-state p { font-size: 0.95rem; }
+
+        /* ── FOOTER ── */
+        footer {
+            margin-left: var(--sidebar-w);
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            transition: margin-left 0.3s ease;
+        }
+
+        /* ── DIALOG ── */
+        .dialog-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .dialog-overlay.active { display: flex; }
+        .dialog-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 380px;
+            padding: 1.25rem;
+            animation: slideDown 0.25s ease;
+        }
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .dialog-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .dialog-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .dialog-close:hover { color: #e55; }
+        .dialog-search input {
+            width: 100%;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 0.8rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            margin-bottom: 0.5rem;
+        }
+        .dialog-search input:focus { border-color: var(--main); }
+        .dialog-list-item {
+            padding: 0.5rem 0.4rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: background 0.15s;
+        }
+        .dialog-list-item:hover { background: var(--surface2); color: var(--main); }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 0.6rem 1.25rem;
+            font-size: 0.88rem;
+            color: var(--text);
+            z-index: 999;
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+            opacity: 0;
+            white-space: nowrap;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .right-column { display: none; }
+        }
+        @media (max-width: 768px) {
+            aside#sidebar { display: none; }
+            main { margin-left: 0; }
+            footer { margin-left: 0; }
+            header { padding-left: 1rem; }
+            .feed-column { padding: 1rem 0.75rem; }
+
+            /* Bottom nav on mobile */
+            .bottom-nav {
+                display: flex !important;
+            }
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(22,22,22,0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            z-index: 98;
+            padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
+        }
+        .bottom-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .bottom-nav ul li a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-sm);
+            transition: color 0.2s;
+        }
+        .bottom-nav ul li a i { font-size: 1.2rem; }
+        .bottom-nav ul li a.active, .bottom-nav ul li a:hover { color: var(--main); }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <a class="logo" href="home.php">Link<span>Spam</span></a>
+    <div class="header-center">
+        <div class="search-wrap">
+            <i class="fa fa-search"></i>
+            <input type="text" placeholder="Search people, tags, posts…">
+        </div>
+    </div>
+    <div class="header-right">
+        <button class="btn-post-header" onclick="toggleComposer()">
+            <i class="fa fa-plus"></i> Post
+        </button>
+        <div class="avatar-btn" onclick="toggleUserMenu()">
+            <i class="fa fa-user"></i>
+        </div>
+    </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+    <div class="sidebar-inner">
+        <a href="home.php"   class="nav-item active"><i class="fa fa-house"></i><span>Home</span></a>
+        <a href="inbox.php"  class="nav-item"><i class="fa fa-inbox"></i><span>Inbox</span></a>
+        <a href="leaderboard.php" class="nav-item"><i class="fa fa-trophy"></i><span>Leaderboard</span></a>
+        <a href="dashboard.php"   class="nav-item"><i class="fa-solid fa-chart-simple"></i><span>Dashboard</span></a>
+        <a href="affiliate.php"   class="nav-item"><i class="fa-solid fa-star"></i><span>Affiliates</span></a>
+        <a href="Profile.php"     class="nav-item"><i class="fa fa-user"></i><span>Profile</span></a>
+        <a href="feedback.php"    class="nav-item"><i class="fa-solid fa-circle-info"></i><span>Feedback</span></a>
+        <div class="sidebar-spacer"></div>
+        <a href="logout.php"  class="nav-item" style="color:#e55555;"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+            <i class="fa fa-angle-right"></i>
+        </button>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+    <div class="feed-column">
+
+        <!-- Post Composer -->
+        <form method="POST" action="home.php" enctype="multipart/form-data">
+            <div class="post-composer" id="postComposer">
+                <div class="composer-top">
+                    <div class="composer-avatar"><i class="fa fa-user"></i></div>
+                    <textarea
+                        class="composer-textarea"
+                        name="post"
+                        maxlength="255"
+                        placeholder="What's on your mind?"
+                        rows="3"
+                        oninput="updateCharCount(this)"></textarea>
+                </div>
+                <div class="composer-footer">
+                    <div class="composer-tools">
+                        <button type="button" class="tool-btn" onclick="openDialog('hashTagDialog')" title="Add hashtag">
+                            <i class="fa-solid fa-hashtag"></i>
+                        </button>
+                        <button type="button" class="tool-btn" onclick="openDialog('userTagDialog')" title="Tag user">
+                            <i class="fa-solid fa-user-tag"></i>
+                        </button>
+                        <button type="button" class="tool-btn" title="Add image">
+                            <label><input type="file" name="file" accept="image/*"><i class="fa-solid fa-image"></i></label>
+                        </button>
+                    </div>
+                    <span class="char-count" id="charCount">255</span>
+                    <button type="submit" name="btnSavePost" class="btn-submit-post">Publish</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Feed Tabs -->
+        <div class="feed-tabs">
+            <div class="feed-tab active" onclick="setTab(this)">For You</div>
+            <div class="feed-tab" onclick="setTab(this)">Following</div>
+            <div class="feed-tab" onclick="setTab(this)">Trending</div>
+        </div>
+
+        <!-- Demo Posts -->
+        <div class="post-card">
+            <div class="post-header">
+                <div class="post-user">
+                    <div class="post-avatar"><i class="fa fa-user"></i></div>
+                    <div class="post-user-info">
+                        <a class="post-username" href="Profile.php?username=alex_dev">alex_dev</a>
+                        <div class="post-meta">
+                            <span>2h ago</span>
+                            <span class="post-tag">#webdev</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-options"><i class="fa fa-ellipsis"></i></div>
+            </div>
+            <div class="post-body">
+                Just shipped a new feature that reduced load time by 60% 🚀 The trick was lazy loading combined with smart caching. <span class="hashtag">#performance</span> <span class="hashtag">#webdev</span> <span class="mention">@linkspam</span>
+            </div>
+            <div class="post-actions">
+                <button class="action-btn" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span>142</span></button>
+                <button class="action-btn" onclick="toggleComment(this)"><i class="fa-regular fa-comment"></i> <span>24</span></button>
+                <button class="action-btn"><i class="fa-solid fa-retweet"></i> <span>18</span></button>
+                <div class="action-spacer"></div>
+                <button class="action-btn" onclick="copyLink()"><i class="fa-regular fa-share-from-square"></i></button>
+            </div>
+            <div class="comment-section" style="display:none;">
+                <input type="text" class="comment-input" placeholder="Write a comment…">
+                <button class="comment-submit"><i class="fa fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-header">
+                <div class="post-user">
+                    <div class="post-avatar"><i class="fa fa-user"></i></div>
+                    <div class="post-user-info">
+                        <a class="post-username" href="Profile.php?username=sara_ui">sara_ui</a>
+                        <div class="post-meta">
+                            <span>5h ago</span>
+                            <span class="post-tag">#design</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-options"><i class="fa fa-ellipsis"></i></div>
+            </div>
+            <div class="post-body">
+                Dark mode isn't a trend anymore — it's the default. Designing for it first makes your light theme better too. Here's why… <span class="hashtag">#uxdesign</span> <span class="hashtag">#darkmode</span>
+            </div>
+            <div class="post-actions">
+                <button class="action-btn liked" onclick="toggleLike(this)"><i class="fa-solid fa-heart"></i> <span>289</span></button>
+                <button class="action-btn" onclick="toggleComment(this)"><i class="fa-regular fa-comment"></i> <span>51</span></button>
+                <button class="action-btn"><i class="fa-solid fa-retweet"></i> <span>33</span></button>
+                <div class="action-spacer"></div>
+                <button class="action-btn" onclick="copyLink()"><i class="fa-regular fa-share-from-square"></i></button>
+            </div>
+            <div class="comment-section" style="display:none;">
+                <input type="text" class="comment-input" placeholder="Write a comment…">
+                <button class="comment-submit"><i class="fa fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="post-card">
+            <div class="post-header">
+                <div class="post-user">
+                    <div class="post-avatar"><i class="fa fa-user"></i></div>
+                    <div class="post-user-info">
+                        <a class="post-username" href="Profile.php?username=j_codes">j_codes</a>
+                        <div class="post-meta">
+                            <span>Yesterday</span>
+                            <span class="post-tag">#tips</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-options"><i class="fa fa-ellipsis"></i></div>
+            </div>
+            <div class="post-body">
+                Hot take: CSS Grid is underused. Most developers reach for Flexbox for everything, but Grid handles 2D layouts so elegantly. A thread 🧵 <span class="hashtag">#css</span> <span class="hashtag">#frontend</span>
+            </div>
+            <div class="post-actions">
+                <button class="action-btn" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span>97</span></button>
+                <button class="action-btn" onclick="toggleComment(this)"><i class="fa-regular fa-comment"></i> <span>12</span></button>
+                <button class="action-btn"><i class="fa-solid fa-retweet"></i> <span>8</span></button>
+                <div class="action-spacer"></div>
+                <button class="action-btn" onclick="copyLink()"><i class="fa-regular fa-share-from-square"></i></button>
+            </div>
+            <div class="comment-section" style="display:none;">
+                <input type="text" class="comment-input" placeholder="Write a comment…">
+                <button class="comment-submit"><i class="fa fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
+
+        <!-- Streak -->
+        <div class="widget">
+            <div class="widget-title">Your Streak</div>
+            <div class="streak-row">
+                <div>
+                    <div class="streak-num">7</div>
+                    <div class="streak-label">days in a row</div>
+                </div>
+                <div class="streak-flame">🔥</div>
+            </div>
+        </div>
+
+        <!-- Trending -->
+        <div class="widget">
+            <div class="widget-title">Trending Tags</div>
+            <div class="trend-item">
+                <span class="trend-tag">#webdev</span>
+                <span class="trend-count">1.2k posts today</span>
+            </div>
+            <div class="trend-item">
+                <span class="trend-tag">#opensource</span>
+                <span class="trend-count">847 posts today</span>
+            </div>
+            <div class="trend-item">
+                <span class="trend-tag">#uxdesign</span>
+                <span class="trend-count">631 posts today</span>
+            </div>
+            <div class="trend-item">
+                <span class="trend-tag">#css</span>
+                <span class="trend-count">512 posts today</span>
+            </div>
+        </div>
+
+        <!-- Suggested -->
+        <div class="widget">
+            <div class="widget-title">People to Follow</div>
+            <div class="suggested-user">
+                <div class="sug-avatar"><i class="fa fa-user"></i></div>
+                <div class="sug-info">
+                    <div class="sug-name">Mike Chen</div>
+                    <div class="sug-handle">@mike_builds</div>
+                </div>
+                <button class="btn-follow" onclick="toggleFollow(this)">Follow</button>
+            </div>
+            <div class="suggested-user">
+                <div class="sug-avatar"><i class="fa fa-user"></i></div>
+                <div class="sug-info">
+                    <div class="sug-name">Priya Sharma</div>
+                    <div class="sug-handle">@priya_ux</div>
+                </div>
+                <button class="btn-follow" onclick="toggleFollow(this)">Follow</button>
+            </div>
+            <div class="suggested-user">
+                <div class="sug-avatar"><i class="fa fa-user"></i></div>
+                <div class="sug-info">
+                    <div class="sug-name">David Lee</div>
+                    <div class="sug-handle">@dlee_dev</div>
+                </div>
+                <button class="btn-follow" onclick="toggleFollow(this)">Follow</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav">
+    <ul>
+        <li><a href="home.php" class="active"><i class="fa fa-house"></i>Home</a></li>
+        <li><a href="inbox.php"><i class="fa fa-inbox"></i>Inbox</a></li>
+        <li><a href="#" onclick="toggleComposer(); return false;"><i class="fa-solid fa-plus-circle"></i>Post</a></li>
+        <li><a href="leaderboard.php"><i class="fa fa-trophy"></i>Top</a></li>
+        <li><a href="Profile.php"><i class="fa fa-user"></i>Profile</a></li>
+    </ul>
+</nav>
+
+<!-- DIALOGS -->
+<div class="dialog-overlay" id="hashTagDialog" onclick="closeDialogOnOverlay(event, 'hashTagDialog')">
+    <div class="dialog-box">
+        <div class="dialog-header">
+            <h3><i class="fa-solid fa-hashtag" style="color:var(--main);margin-right:.4rem"></i>Add Hashtag</h3>
+            <button class="dialog-close" onclick="closeDialog('hashTagDialog')"><i class="fa fa-xmark"></i></button>
+        </div>
+        <hr style="border-color:var(--border);margin-bottom:.75rem">
+        <div class="dialog-search">
+            <input type="text" placeholder="Search or type a hashtag…" oninput="filterTags(this)">
+        </div>
+        <div id="tagList">
+            <div class="dialog-list-item" onclick="insertTag('#webdev')">#webdev</div>
+            <div class="dialog-list-item" onclick="insertTag('#design')">#design</div>
+            <div class="dialog-list-item" onclick="insertTag('#css')">#css</div>
+            <div class="dialog-list-item" onclick="insertTag('#javascript')">#javascript</div>
+            <div class="dialog-list-item" onclick="insertTag('#opensource')">#opensource</div>
+        </div>
+    </div>
+</div>
+
+<div class="dialog-overlay" id="userTagDialog" onclick="closeDialogOnOverlay(event, 'userTagDialog')">
+    <div class="dialog-box">
+        <div class="dialog-header">
+            <h3><i class="fa-solid fa-user-tag" style="color:var(--main);margin-right:.4rem"></i>Tag a User</h3>
+            <button class="dialog-close" onclick="closeDialog('userTagDialog')"><i class="fa fa-xmark"></i></button>
+        </div>
+        <hr style="border-color:var(--border);margin-bottom:.75rem">
+        <div class="dialog-search">
+            <input type="text" placeholder="Search users…" oninput="filterUsers(this)">
+        </div>
+        <div id="userList">
+            <div class="dialog-list-item" onclick="insertTag('@alex_dev')">@alex_dev</div>
+            <div class="dialog-list-item" onclick="insertTag('@sara_ui')">@sara_ui</div>
+            <div class="dialog-list-item" onclick="insertTag('@j_codes')">@j_codes</div>
+            <div class="dialog-list-item" onclick="insertTag('@mike_builds')">@mike_builds</div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+    © 2025 LinkSpam · <a href="feedback.php" style="color:var(--text-dim);text-decoration:none">Feedback</a> · <a href="#" style="color:var(--text-dim);text-decoration:none">Privacy</a>
+</footer>
+
+<script>
+    /* ── Sidebar ── */
+    const sidebar = document.getElementById('sidebar');
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
+    }
+
+    /* ── Composer ── */
+    const composer = document.getElementById('postComposer');
+    function toggleComposer() {
+        composer.classList.toggle('active');
+        if (composer.classList.contains('active')) {
+            composer.querySelector('textarea').focus();
+        }
+    }
+
+    function updateCharCount(el) {
+        document.getElementById('charCount').textContent = 255 - el.value.length;
+    }
+
+    /* ── Feed Tabs ── */
+    function setTab(el) {
+        document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    /* ── Like ── */
+    function toggleLike(btn) {
+        const isLiked = btn.classList.toggle('liked');
+        const icon = btn.querySelector('i');
+        const count = btn.querySelector('span');
+        const n = parseInt(count.textContent);
+        if (isLiked) {
+            icon.classList.remove('fa-regular');
+            icon.classList.add('fa-solid');
+            count.textContent = n + 1;
+        } else {
+            icon.classList.remove('fa-solid');
+            icon.classList.add('fa-regular');
+            count.textContent = n - 1;
+        }
+    }
+
+    /* ── Comment Toggle ── */
+    function toggleComment(btn) {
+        const card = btn.closest('.post-card');
+        const section = card.querySelector('.comment-section');
+        const isVisible = section.style.display !== 'none';
+        section.style.display = isVisible ? 'none' : 'flex';
+        if (!isVisible) section.querySelector('input').focus();
+    }
+
+    /* ── Copy Link / Share ── */
+    function copyLink() {
+        navigator.clipboard.writeText(window.location.href).catch(() => {});
+        showToast('Link copied to clipboard!');
+    }
+
+    /* ── Follow ── */
+    function toggleFollow(btn) {
+        const isFollowing = btn.classList.toggle('following');
+        btn.textContent = isFollowing ? 'Following' : 'Follow';
+        showToast(isFollowing ? 'You are now following them!' : 'Unfollowed.');
+    }
+
+    /* ── Dialogs ── */
+    function openDialog(id) { document.getElementById(id).classList.add('active'); }
+    function closeDialog(id) { document.getElementById(id).classList.remove('active'); }
+    function closeDialogOnOverlay(e, id) {
+        if (e.target === e.currentTarget) closeDialog(id);
+    }
+
+    function insertTag(tag) {
+        const ta = document.querySelector('.composer-textarea');
+        const pos = ta.selectionStart;
+        const before = ta.value.substring(0, pos);
+        const after  = ta.value.substring(pos);
+        ta.value = before + tag + ' ' + after;
+        ta.focus();
+        ta.selectionStart = ta.selectionEnd = pos + tag.length + 1;
+        updateCharCount(ta);
+        // close all dialogs
+        document.querySelectorAll('.dialog-overlay').forEach(d => d.classList.remove('active'));
+        if (!composer.classList.contains('active')) toggleComposer();
+    }
+
+    function filterTags(input) {
+        const q = input.value.toLowerCase();
+        document.querySelectorAll('#tagList .dialog-list-item').forEach(el => {
+            el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    }
+    function filterUsers(input) {
+        const q = input.value.toLowerCase();
+        document.querySelectorAll('#userList .dialog-list-item').forEach(el => {
+            el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    }
+
+    /* ── User Menu placeholder ── */
+    function toggleUserMenu() {
+        showToast('Profile menu coming soon!');
+    }
+
+    /* ── Toast ── */
+    let toastTimer;
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    /* ── Keyboard shortcuts ── */
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.dialog-overlay').forEach(d => d.classList.remove('active'));
+            composer.classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>
